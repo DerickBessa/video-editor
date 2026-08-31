@@ -1,0 +1,54 @@
+{
+  "$schema": "./style.schema.json",
+  "name": "default",
+  "description": "Neutral baseline. Every other style overrides only what it needs.",
+  "format": "short",
+  "resolution": "1080x1920",
+  "fps": 30,
+
+  "cuts": {
+    "removeSilences": true,
+    "silenceThreshold": -35,
+    "minSilenceDuration": 0.35,
+    "paddingBefore": 0.08,
+    "paddingAfter": 0.12,
+    "intensity": "normal",
+    "fillerWords": "safe",
+    "minSegment": 0.1
+  },
+
+  "captions": {
+    "enabled": true,
+    "style": "clean",
+    "maxWords": 4,
+    "position": "center-bottom",
+    "highlightKeywords": false
+  },
+
+  "zoom": {
+    "enabled": false,
+    "strength": 1.08,
+    "maxPerMinute": 6
+  },
+
+  "pace": {
+    "maxVisualStaticSeconds": 6
+  },
+
+  "audio": {
+    "normalize": true,
+    "targetLufs": -16,
+    "denoise": false,
+    "musicVolume": 0.1,
+    "duckMusic": true
+  },
+
+  "sfx": {
+    "enabled": false,
+    "density": "low"
+  },
+
+  "transitions": {
+    "default": "cut"
+  }
+}

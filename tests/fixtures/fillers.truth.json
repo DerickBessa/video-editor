@@ -1,0 +1,38 @@
+{
+  "language": "pt",
+  "engine": "sapi:Microsoft Maria Desktop",
+  "duration": 13.425,
+  "fullText": "Então, vamos começar o tutorial. Eu queria, ahn, mostrar o o terminal. É tipo, muito simples de usar.",
+  "sentences": [
+    {
+      "index": 0,
+      "text": "Então, vamos começar o tutorial.",
+      "start": 0,
+      "end": 3.662
+    },
+    {
+      "index": 1,
+      "text": "Eu queria, ahn, mostrar o o terminal.",
+      "start": 4.462,
+      "end": 8.9
+    },
+    {
+      "index": 2,
+      "text": "É tipo, muito simples de usar.",
+      "start": 9.7,
+      "end": 13.425
+    }
+  ],
+  "silences": [
+    {
+      "start": 3.662,
+      "end": 4.462,
+      "duration": 0.8
+    },
+    {
+      "start": 8.9,
+      "end": 9.7,
+      "duration": 0.8
+    }
+  ]
+}

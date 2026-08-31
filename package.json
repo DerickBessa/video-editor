@@ -1,0 +1,26 @@
+{
+  "name": "video-editor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Modular automatic video editing arsenal orchestrated by Claude Code",
+  "bin": {
+    "ve": "./bin/ve.mjs"
+  },
+  "scripts": {
+    "ve": "node bin/ve.mjs",
+    "test": "node tests/run.mjs",
+    "capabilities": "node bin/ve.mjs capabilities"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.518",
+    "@remotion/cli": "^4.0.518",
+    "@remotion/renderer": "^4.0.518",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "remotion": "^4.0.518"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/speech.mp4",
+  "style": "podcast",
+  "output": {
+    "path": "output/podcast.mp4",
+    "resolution": "1080x1920",
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [
+      {
+        "start": 2.955,
+        "end": 5.256
+      },
+      {
+        "start": 10.98,
+        "end": 13.071
+      },
+      {
+        "start": 17.64,
+        "end": 19.308
+      },
+      {
+        "start": 23.961,
+        "end": 24.623
+      }
+    ],
+    "fillers": []
+  },
+  "speed": [],
+  "crop": {
+    "mode": "smart",
+    "aspect": "9:16",
+    "smoothing": 0.88,
+    "deadzone": 0.025
+  },
+  "zooms": [],
+  "captions": {
+    "enabled": true,
+    "style": "clean",
+    "maxWords": 6,
+    "language": "pt",
+    "prompt": "Claude Code, npm install, terminal",
+    "keywords": []
+  },
+  "overlays": [],
+  "sfx": [],
+  "audio": {
+    "normalize": true,
+    "targetLufs": -16
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T01:27:12.756Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  }
+}

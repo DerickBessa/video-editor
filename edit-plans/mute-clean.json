@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/mute.mp4",
+  "style": "clean",
+  "output": {
+    "path": "temp/tests/ev-mute.mp4",
+    "resolution": "1080x1920",
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [],
+    "fillers": []
+  },
+  "speed": [],
+  "crop": {
+    "mode": "static",
+    "aspect": "9:16",
+    "position": "center"
+  },
+  "zooms": [],
+  "captions": {
+    "enabled": false
+  },
+  "overlays": [],
+  "sfx": [],
+  "audio": {
+    "normalize": false
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T03:04:59.090Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  }
+}

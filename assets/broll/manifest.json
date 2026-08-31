@@ -1,0 +1,7 @@
+{
+  "note": "Maps each clip to the words it illustrates, so `add-broll --auto` can match the transcript.",
+  "clips": {
+    "terminal.mp4": { "tags": ["terminal", "shell", "console", "bash"] },
+    "npm.mp4": { "tags": ["npm", "install", "node", "package"] }
+  }
+}

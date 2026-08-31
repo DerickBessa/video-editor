@@ -1,0 +1,49 @@
+{
+  "language": "pt",
+  "engine": "sapi:Microsoft Maria Desktop",
+  "duration": 24.743,
+  "fullText": "Olá, seja bem-vindo ao meu canal. Hoje vamos falar sobre o Claude Code e como automatizar a edição de vídeos. Primeiro, abra o terminal e execute npm install. Depois disso, o vídeo será renderizado automaticamente.",
+  "sentences": [
+    {
+      "index": 0,
+      "text": "Olá, seja bem-vindo ao meu canal.",
+      "start": 0,
+      "end": 3.763
+    },
+    {
+      "index": 1,
+      "text": "Hoje vamos falar sobre o Claude Code e como automatizar a edição de vídeos.",
+      "start": 5.263,
+      "end": 11.801
+    },
+    {
+      "index": 2,
+      "text": "Primeiro, abra o terminal e execute npm install.",
+      "start": 13.001,
+      "end": 18.415
+    },
+    {
+      "index": 3,
+      "text": "Depois disso, o vídeo será renderizado automaticamente.",
+      "start": 19.315,
+      "end": 24.743
+    }
+  ],
+  "silences": [
+    {
+      "start": 3.763,
+      "end": 5.263,
+      "duration": 1.5
+    },
+    {
+      "start": 11.801,
+      "end": 13.001,
+      "duration": 1.2
+    },
+    {
+      "start": 18.415,
+      "end": 19.315,
+      "duration": 0.9
+    }
+  ]
+}

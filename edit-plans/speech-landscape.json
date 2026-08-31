@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/speech.mp4",
+  "style": "landscape",
+  "output": {
+    "path": "temp/tests/ev-val-landscape.mp4",
+    "resolution": null,
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [
+      {
+        "start": 2.955,
+        "end": 5.256
+      },
+      {
+        "start": 10.98,
+        "end": 13.071
+      },
+      {
+        "start": 17.64,
+        "end": 19.308
+      },
+      {
+        "start": 23.961,
+        "end": 24.623
+      }
+    ],
+    "fillers": []
+  },
+  "speed": [],
+  "crop": null,
+  "zooms": [],
+  "captions": {
+    "enabled": true,
+    "style": "minimal",
+    "maxWords": 9,
+    "language": "pt",
+    "prompt": "Claude Code, npm install, terminal",
+    "keywords": []
+  },
+  "overlays": [],
+  "sfx": [],
+  "audio": {
+    "normalize": true,
+    "targetLufs": -16
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T03:01:35.351Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  }
+}

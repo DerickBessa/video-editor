@@ -1,0 +1,54 @@
+{
+  "generated": "2026-08-31T02:50:37.220Z",
+  "note": "Synthesised placeholders. Replace any file with a real .wav of the same name.",
+  "sounds": [
+    {
+      "name": "pop",
+      "file": "pop.wav",
+      "duration": 0.16,
+      "description": "Short bright pop. Word highlights, list items appearing."
+    },
+    {
+      "name": "click",
+      "file": "click.wav",
+      "duration": 0.05,
+      "description": "Dry click. Cursor moves, small UI beats."
+    },
+    {
+      "name": "ding",
+      "file": "ding.wav",
+      "duration": 0.9,
+      "description": "Bell. Correct answers, key points, reveals."
+    },
+    {
+      "name": "thud",
+      "file": "thud.wav",
+      "duration": 0.45,
+      "description": "Low impact. Titles landing, hard cuts, emphasis."
+    },
+    {
+      "name": "whoosh",
+      "file": "whoosh.wav",
+      "duration": 0.55,
+      "description": "Air sweep. Transitions, zooms, wipes."
+    },
+    {
+      "name": "riser",
+      "file": "riser.wav",
+      "duration": 1.2,
+      "description": "Rising tension. Builds into a reveal or punchline."
+    },
+    {
+      "name": "swoosh",
+      "file": "swoosh.wav",
+      "duration": 0.35,
+      "description": "Fast falling sweep. Elements leaving, quick cuts."
+    },
+    {
+      "name": "blip",
+      "file": "blip.wav",
+      "duration": 0.1,
+      "description": "Tiny beep. Counters, ticks, subtle markers."
+    }
+  ]
+}

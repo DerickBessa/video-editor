@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/speech.mp4",
+  "style": "educational",
+  "output": {
+    "path": "temp/tests/ev-val-educational.mp4",
+    "resolution": "1080x1920",
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [
+      {
+        "start": 3.025,
+        "end": 5.176
+      },
+      {
+        "start": 11.05,
+        "end": 12.991
+      },
+      {
+        "start": 17.71,
+        "end": 19.228
+      }
+    ],
+    "fillers": []
+  },
+  "speed": [],
+  "crop": {
+    "mode": "static",
+    "aspect": "9:16",
+    "position": "center"
+  },
+  "zooms": [
+    {
+      "start": 15.49,
+      "end": 17.86,
+      "scale": 1.08,
+      "mode": "smooth",
+      "reason": "emphasis on \"npm\""
+    }
+  ],
+  "captions": {
+    "enabled": true,
+    "style": "clean",
+    "maxWords": 7,
+    "language": "pt",
+    "prompt": "Claude Code, npm install, terminal",
+    "keywords": [
+      "Primeiro",
+      "terminal",
+      "npm",
+      "install"
+    ]
+  },
+  "overlays": [],
+  "sfx": [],
+  "audio": {
+    "normalize": true,
+    "targetLufs": -16
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T03:01:24.696Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  }
+}

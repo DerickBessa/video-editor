@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/speech.mp4",
+  "style": "viral",
+  "output": {
+    "path": "temp/tests/ev-viral.mp4",
+    "resolution": "1080x1920",
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [
+      {
+        "start": 2.905,
+        "end": 5.326
+      },
+      {
+        "start": 10.93,
+        "end": 13.141
+      },
+      {
+        "start": 13.848,
+        "end": 14.063
+      },
+      {
+        "start": 17.59,
+        "end": 19.378
+      },
+      {
+        "start": 23.911,
+        "end": 24.693
+      }
+    ],
+    "fillers": []
+  },
+  "speed": [
+    {
+      "rate": 1.05
+    }
+  ],
+  "crop": {
+    "mode": "static",
+    "aspect": "9:16",
+    "position": "center"
+  },
+  "zooms": [
+    {
+      "start": 12.63,
+      "end": 14.88,
+      "scale": 1.14,
+      "mode": "punch",
+      "reason": "emphasis on \"Primeiro\""
+    },
+    {
+      "start": 15.49,
+      "end": 17.86,
+      "scale": 1.14,
+      "mode": "punch",
+      "reason": "emphasis on \"npm\""
+    }
+  ],
+  "captions": {
+    "enabled": true,
+    "style": "viral",
+    "maxWords": 4,
+    "language": "pt",
+    "prompt": "Claude Code, npm install, terminal",
+    "keywords": [
+      "Primeiro",
+      "terminal",
+      "npm",
+      "install"
+    ]
+  },
+  "overlays": [],
+  "sfx": [
+    {
+      "timestamp": 12.98,
+      "sound": "pop",
+      "volume": 0.35,
+      "priority": 0.596,
+      "reason": "beat on \"Primeiro\""
+    },
+    {
+      "timestamp": 15.84,
+      "sound": "pop",
+      "volume": 0.35,
+      "priority": 0.807,
+      "reason": "beat on \"npm\""
+    }
+  ],
+  "audio": {
+    "normalize": true,
+    "targetLufs": -14
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T03:02:56.111Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  },
+  "sfxDensity": 5
+}

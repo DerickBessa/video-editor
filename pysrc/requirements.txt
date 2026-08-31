@@ -1,0 +1,15 @@
+# Python sidecar dependencies. Installed into ./.venv only — never into the
+# interpreter on PATH (see docs/STACK.md).
+#
+# faster-whisper is deliberately preferred over openai-whisper and WhisperX:
+# it runs on CTranslate2, so it needs NO torch (~200 MB of deps instead of
+# several GB), and it still provides cross-attention word-level timestamps.
+faster-whisper==1.2.1
+
+# Face detection for smart-crop / blur-region (YuNet via OpenCV).
+# OpenCV 5 no longer bundles Haar cascades, and YuNet is better anyway.
+opencv-python-headless
+
+# Person segmentation for `background --mode blur|darken|replace`.
+# Optional: `background --mode vignette` needs none of this.
+mediapipe

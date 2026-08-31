@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "source": "tests/fixtures/speech.mp4",
+  "style": "coding",
+  "output": {
+    "path": "temp/tests/ev-val-coding.mp4",
+    "resolution": "1080x1920",
+    "fps": null
+  },
+  "cuts": {
+    "keep": null,
+    "remove": [],
+    "silences": [
+      {
+        "start": 2.955,
+        "end": 5.256
+      },
+      {
+        "start": 10.98,
+        "end": 13.071
+      },
+      {
+        "start": 17.64,
+        "end": 19.308
+      },
+      {
+        "start": 23.961,
+        "end": 24.623
+      }
+    ],
+    "fillers": []
+  },
+  "speed": [],
+  "crop": {
+    "mode": "contain",
+    "aspect": "9:16",
+    "background": "blur"
+  },
+  "zooms": [
+    {
+      "start": 6.87,
+      "end": 8.76,
+      "scale": 1.1,
+      "mode": "smooth",
+      "reason": "emphasis on \"Claude\""
+    },
+    {
+      "start": 14.27,
+      "end": 16.18,
+      "scale": 1.1,
+      "mode": "smooth",
+      "reason": "emphasis on \"terminal\""
+    }
+  ],
+  "captions": {
+    "enabled": true,
+    "style": "bold",
+    "maxWords": 4,
+    "language": "pt",
+    "prompt": "Claude Code, npm install, terminal",
+    "keywords": [
+      "Claude",
+      "terminal",
+      "npm",
+      "install"
+    ]
+  },
+  "overlays": [],
+  "sfx": [
+    {
+      "timestamp": 7.22,
+      "sound": "click",
+      "volume": 0.35,
+      "priority": 1,
+      "reason": "beat on \"Claude\""
+    }
+  ],
+  "audio": {
+    "normalize": true,
+    "targetLufs": -16
+  },
+  "transitions": [],
+  "meta": {
+    "createdAt": "2026-08-31T03:01:13.828Z",
+    "notes": [],
+    "generatedBy": "edit-video"
+  },
+  "sfxDensity": 3
+}
