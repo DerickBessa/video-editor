@@ -16,6 +16,14 @@
 //     interpolation for anything that should feel mechanical (progress bars)
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Img } from 'remotion';
+import { BruteForceRaceCondition, TOTAL_SECONDS as BRUTE_FORCE_RACE_CONDITION_SECONDS } from './scenes/BruteForceRaceCondition.jsx';
+import { DeckCaption } from './scenes/DeckCaption.jsx';
+import { DeckHook } from './scenes/DeckHook.jsx';
+import { DeckClickBurst } from './scenes/DeckClickBurst.jsx';
+import { PromptInjection, TOTAL_SECONDS as PROMPT_INJECTION_SECONDS } from './scenes/PromptInjection.jsx';
+import { PiCam, PiOverlay } from './scenes/PiCam.jsx';
+
+export { BRUTE_FORCE_RACE_CONDITION_SECONDS, PROMPT_INJECTION_SECONDS };
 
 /* ------------------------------------------------------------- primitives */
 
@@ -403,4 +411,6 @@ export const COMPONENTS = {
   Title, Subtitle, Caption: Subtitle, Callout, LowerThird, Notification,
   ProgressBar, CircleHighlight, Arrow,
   CodeBlock, Terminal, BrowserWindow, PhoneFrame, TweetCard, ImageCard, CodeDiff,
+  BruteForceRaceCondition, DeckCaption, DeckHook, DeckClickBurst, PromptInjection,
+  PiCam, PiOverlay,
 };

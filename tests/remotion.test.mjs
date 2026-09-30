@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { test, eq, near, assert, verifyMedia, cliOk, tmp } from './harness.mjs';
 import { fixture } from './fixtures.mjs';
-import { remotionRender, listComponents, CODECS } from '../tools/remotion-render.mjs';
+import { remotionRender, listComponents, sourceHash, CODECS } from '../tools/remotion-render.mjs';
 import { addOverlay } from '../tools/add-overlay.mjs';
 import { run } from '../lib/proc.mjs';
 import { FFMPEG } from '../lib/ffmpeg.mjs';
@@ -142,6 +142,47 @@ test('the bundle is cached between renders', async () => {
   await remotionRender('Title', { props: { text: 'cached' }, duration: 1, width: 320, height: 240, out: tmp('rm-cache.mov') });
   const elapsed = Date.now() - t0;
   assert(elapsed < 60000, `a cached-bundle render took ${elapsed}ms, which suggests it rebuilt`);
+});
+
+test('h264 delivers a full-frame piece, without alpha and without PNG frames', async () => {
+  // O caso de uso oposto ao overlay: a animação É a peça, tem fundo próprio, e o alpha não
+  // seria composto por cima de nada. Pagar por ele custa frames PNG (o passo mais lento do
+  // render) e um intermediário de dezenas de GB — ver ROADMAP.md. Aqui a AUSÊNCIA de alpha é
+  // o comportamento correto, e é justamente o que este teste fixa.
+  const out = tmp('rm-h264.mp4');
+  const r = await remotionRender('Title', {
+    props: { text: 'final' }, duration: 1, fps: 30, width: 320, height: 240,
+    codec: 'h264', crf: 20, out,
+  });
+  eq(r.codec, 'h264');
+  assert(/\.mp4$/.test(r.output), `expected an mp4, got ${r.output}`);
+  eq(r.hasAlpha, false, 'h264 carries no alpha, and that is the point');
+  const m = await verifyMedia(out, { width: 320, height: 240, duration: 1, fps: 30 });
+  eq(m.codec, 'h264', 'the stream must really be h264, not just named so');
+});
+
+test('editing a component in remotion/scenes invalidates the bundle cache', async () => {
+  // Regression. `sourceHash()` used to read only `remotion/*`, so every edit inside
+  // `remotion/scenes/` — where every real component lives — left the hash unchanged, the cache
+  // marker valid, and the render silently produced the PREVIOUS version of the component.
+  // It cost an entire debugging cycle: the same stack trace came back from code that no longer
+  // existed. A slow render is annoying; a stale one is a lie.
+  const scenes = path.join(ROOT, 'remotion', 'scenes');
+  const victim = fs.readdirSync(scenes).find(f => /\.jsx$/.test(f));
+  assert(victim, 'remotion/scenes should contain at least one component');
+
+  const file = path.join(scenes, victim);
+  const before = sourceHash();
+  const st = fs.statSync(file);
+  try {
+    // Touch only the mtime — the content is a delivered artefact and must come back byte-identical.
+    const later = new Date(st.mtimeMs + 60000);
+    fs.utimesSync(file, later, later);
+    assert(sourceHash() !== before, 'a changed file under remotion/scenes must change the hash');
+  } finally {
+    fs.utimesSync(file, st.atime, st.mtime);
+  }
+  eq(sourceHash(), before, 'restoring the mtime must restore the hash');
 });
 
 test('an unknown component is rejected with the list', async () => {

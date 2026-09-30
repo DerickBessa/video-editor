@@ -369,3 +369,151 @@ explicitly.
 
 `python` on `PATH` resolves into an unrelated application's virtualenv (`hermes-agent`).
 All sidecar packages go into the project-local `.venv/`. See `docs/STACK.md`.
+
+### Stream-copying an untouched head and concatenating a re-encoded tail — **rejected for HEVC/mp4**
+
+Burning three words into the last 2 s of `raw/trialpha.mp4` (2160x3840 HEVC Main 10) only needs
+the tail re-encoded, so the obvious saving is to `-c copy` everything up to the last keyframe and
+concat. It does not work, and it fails **silently at mux time** — `ffmpeg` reports no error and
+writes a plausible file.
+
+`hvc1`-tagged HEVC in mp4 carries VPS/SPS/PPS **out of band**, in the `hvcC` box, and an mp4 track
+has exactly one. The concat demuxer keeps the first segment's parameter sets and drops the
+second's, so the re-encoded tail decodes against the wrong SPS: the file probes as a healthy
+365-frame 12.167 s video but only **151 frames actually decode**, the rest dying in
+`Could not find ref with POC n / Error constructing the frame RPS`.
+
+Routing both segments through MPEG-TS with `hevc_mp4toannexb` does not save it either. The
+in-band parameter sets survive inside the TS, but remuxing TS to mp4 as `hvc1` strips them back
+out to a single `hvcC` and the same 151 frames come back. `-tag:v hev1` would legalise in-band
+parameter sets, but `hev1` is exactly the tag Apple's hardware path refuses, so it trades a broken
+file for one that will not play on the phone it is made for.
+
+**What is used instead:** one single-pass encode of the whole clip (`libx265 -crf 15 -preset
+medium -pix_fmt yuv420p10le -tag:v hvc1`) with `-c:a copy`. On a 12 s source that costs ~2 min and
+recompresses footage that did not need it, which is the honest price. The audio still comes
+through untouched — the decoded MD5 matches the source exactly.
+
+**The check that catches this:** `ffprobe -count_frames` and compare `nb_read_frames` against the
+source. Container duration and `nb_frames` both stay correct on a broken concat; only a real
+decode of every frame exposes it.
+
+---
+
+## Reel "Prompt Injection" (2026-09-20)
+
+### `remotion-render` reusava um bundle velho para tudo em `remotion/scenes/` — **corrigido**
+
+`sourceHash()` fazia `fs.readdirSync(remotion/)` **sem recursão**. Todo componente real mora em
+`remotion/scenes/`, então qualquer edição lá dentro deixava o hash igual, o marker do cache
+continuava válido, e o render saía com a **versão anterior** do componente — sem erro, sem aviso.
+
+O sintoma é enganoso: corrigi um keyframe de câmera que derrubava o render, re-renderizei, e o
+mesmo stack trace voltou com os mesmos números. Parece "minha edição não foi salva".
+
+`sourceHash()` agora caminha as subpastas e inclui `.css`/`.json`.
+
+### `anullsrc` + `atrim=duration=0` escreve até o disco acabar — **corrigido**
+
+Em `scripts/retime-narration.mjs`, uma pausa protegida cujo `target` apenas **iguala** a pausa
+real cai em `target > dur` por erro de float (`0.34 > 0.33999999…`) e emite um segmento de
+silêncio de duração `0.000`. `anullsrc` é uma fonte infinita e `atrim=duration=0` não a termina:
+o ffmpeg escreveu **1,37 GB** de mp3 antes de eu matar o processo.
+
+Agora o silêncio só é emitido acima de `MIN_INSERT = 0.01s`. O relatório também foi alinhado, que
+antes imprimia `INSERIDO` para um insert que não aconteceu.
+
+### O Whisper engoliu uma tomada falha inteira — **detectado por energia, não por transcript**
+
+Entre "PDF," e "site," o `large-v3-turbo` reportou um silêncio de 6,46s. Não havia silêncio: havia
+uma tomada falha de 5,8s (-16 a -19 dBFS), que ele simplesmente não transcreveu, emendando as duas
+metades numa frase só.
+
+`silencedetect -36dB` **não acusa** — o trecho tem energia de fala. Só a varredura de RMS por
+janela mostra:
+
+```bash
+ffmpeg -ss 63 -to 73 -i narr.m4a -af \
+ "aresample=8000,asetnsamples=800,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level:file=-" \
+ -f null -
+```
+
+Consequência de processo: quando existe take falho, o corte tem que vir **antes** da transcrição de
+referência. O `retime` não pode resolver isso, porque os timestamps que ele leria naquela região
+não descrevem o áudio que está lá.
+
+Isso é o §12b passo 6 do house style valendo de novo, com um caso novo: não foi uma interjeição
+não transcrita, foi uma tomada inteira.
+
+### `--duration` do `remotion-render` limitado a 60s — **ampliado para 300s**
+
+O limite assumia que overlay é inserto curto. Um cut-away animado de corpo inteiro é uso legítimo
+(este Reel tem 89s). O limite agora é sanidade contra erro de digitação, não uma regra editorial.
+
+### Keyframe de câmera não-monotônico derruba o render no meio — **corrigido**
+
+`CAM_KEYS` é derivado de beats da narração, e dois keyframes podem colidir legitimamente ao mexer
+num beat (`B.instrucaoWord + 0.7` passou de `B.seProprio` por 0,08s). `interpolate` lança exceção
+em range não-monotônico. `useCamera` força as paradas estritamente crescentes antes de interpolar
+— a mesma decisão que `fadeWin` já tinha tomado, pelo mesmo motivo.
+
+### 60s pedidos vs. 87,4s de narração — **conflito reportado, não resolvido em silêncio**
+
+O briefing pede no máximo 60s, proíbe mudar o texto da narração e proíbe acelerar a voz. Com a
+gravação existente as três coisas não coexistem. Entregue em 89,0s, com proposta de corte
+documentada em `docs/prompt-injection-roteiro.md` §3.
+
+### ProRes 4444 com alpha para uma peça de 89s a 60fps — **rejeitado, não cabe em disco**
+
+O pipeline aprovado da vinheta entrega um MOV ProRes 4444 com alpha e compõe o preview a partir
+dele. Aquilo eram 59s a 60fps de um frame majoritariamente **transparente**: 960 MB.
+
+Este Reel tem fundo de tela cheia. Mesmo com `bg={null}`, a grade, o gradiente e a vinheta cobrem
+o quadro inteiro, então quase nenhum pixel é transparente e o ProRes não tem o que economizar:
+
+```
+89s · 60fps · 1080x1920 · ProRes 4444 yuva444p10le  ->  24,7 GB
+```
+
+E ainda não acabou aí. O Remotion faz um passo de **faststart** no fim, que escreve uma **segunda
+cópia inteira** do arquivo. Com 18 GB livres, o render estava condenado a morrer depois de uma
+hora de CPU — sem nenhum aviso até o momento em que o disco acabasse.
+
+Pior: o `imageFormat: 'png'` é obrigatório para qualquer pixel format com alpha, e é o passo mais
+lento do render. Estávamos pagando PNG por frame para produzir um canal alpha que seria
+descartado na composição seguinte.
+
+**O que é usado no lugar:** `--codec h264`, adicionado ao `remotion-render`. Sem alpha, os frames
+intermediários podem ser JPEG (qualidade 95, visualmente idêntico), e o entregável sai direto:
+
+```
+89s · 60fps · 1080x1920 · h264 crf 14  ->  ~1 GB de intermediário
+```
+
+`prores` e `vp8` continuam sendo o certo para **overlay** — que é para o que a ferramenta foi
+feita. A regra é o caso de uso, não o formato: se o resultado vai ser composto por cima de
+outra coisa, alpha; se ele É a peça, h264.
+
+**A armadilha seguinte, e o erro que eu cometi nela:** com frames JPEG o arquivo sai `yuvj420p`
+(full range). O reflexo é "converter para tv-range antes de entregar, senão o Instagram lava os
+pretos". Fiz isso — `scale=in_range=full:out_range=tv,format=yuv420p` — e **piorei o vídeo**:
+
+```
+fundo #05070C        esperado   5,  7, 12
+render (yuvj420p)               5,  5, 12    <- já estava certo
+depois do full->tv              2,  3, 10    <- pretos esmagados
+```
+
+O `yuvj420p` aqui não é uma etiqueta errada sobre dados tv-range; é conteúdo full-range
+corretamente etiquetado, e todo player moderno lê isso certo — é o mesmo que qualquer câmera de
+celular produz. Converter não corrigia nada, só passava os dados por mais um arredondamento.
+
+**O que é feito:** a entrega remuxa com `-c:v copy` e só encoda o áudio. O stream de vídeo sai
+bit a bit igual ao render (CRF 14), sem segunda geração de perda e sem mexer em níveis.
+
+**A regra:** antes de "corrigir" range de cor, MEÇA. Um pixel do fundo extraído dos dois arquivos
+responde em dez segundos o que a teoria não responde:
+
+```bash
+ffmpeg -ss 2 -i arquivo.mp4 -vf "crop=40:40:8:8" -frames:v 1 -f rawvideo -pix_fmt rgb24 - | od -An -tu1 -N3
+```

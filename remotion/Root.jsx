@@ -7,7 +7,7 @@
 // is available the moment it is exported from components.jsx.
 import React from 'react';
 import { Composition } from 'remotion';
-import { COMPONENTS } from './components.jsx';
+import { COMPONENTS, BRUTE_FORCE_RACE_CONDITION_SECONDS } from './components.jsx';
 
 export function Overlay({ component = 'Title', props = {} }) {
   const Cmp = COMPONENTS[component];
@@ -31,11 +31,11 @@ export function RemotionRoot() {
     <Composition
       id="Overlay"
       component={Overlay}
-      durationInFrames={90}
-      fps={30}
+      durationInFrames={Math.round(BRUTE_FORCE_RACE_CONDITION_SECONDS * 60)}
+      fps={60}
       width={1080}
       height={1920}
-      defaultProps={{ component: 'Title', props: { text: 'Title' } }}
+      defaultProps={{ component: 'BruteForceRaceCondition', props: {} }}
     />
   );
 }

@@ -1,0 +1,159 @@
+{
+  "part": "hook",
+  "blocks": [
+    {
+      "s": 3.6,
+      "e": 4.8,
+      "l": [
+        "IMAGINA SE UMA *IA*"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 4.8,
+      "e": 5.88,
+      "l": [
+        "COMEÇASSE A *OBEDECER*"
+      ],
+      "y": 74
+    },
+    {
+      "s": 5.9,
+      "e": 6.74,
+      "l": [
+        "*TUDO*"
+      ],
+      "y": 74,
+      "big": true
+    },
+    {
+      "s": 6.76,
+      "e": 7.92,
+      "l": [
+        "QUE ALGUÉM",
+        "MANDA PRA ELA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 7.96,
+      "e": 8.76,
+      "l": [
+        "*IGNORANDO*"
+      ],
+      "y": 74,
+      "hlColor": "red",
+      "big": true
+    },
+    {
+      "s": 8.78,
+      "e": 9.68,
+      "l": [
+        "*ÉTICA*"
+      ],
+      "y": 74,
+      "hlColor": "red",
+      "big": true
+    },
+    {
+      "s": 9.7,
+      "e": 10.78,
+      "l": [
+        "*BOM SENSO*"
+      ],
+      "y": 74,
+      "hlColor": "red",
+      "big": true
+    },
+    {
+      "s": 10.8,
+      "e": 11.32,
+      "l": [
+        "E *REGRAS*"
+      ],
+      "y": 74,
+      "hlColor": "red",
+      "big": true
+    },
+    {
+      "s": 11.34,
+      "e": 12.02,
+      "l": [
+        "QUE ELA RECEBEU"
+      ],
+      "y": 74
+    },
+    {
+      "s": 12.02,
+      "e": 13.32,
+      "l": [
+        "DO *PRÓPRIO SISTEMA*"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 13.56,
+      "e": 15.0,
+      "l": [
+        "NA VERDADE..."
+      ],
+      "y": 74
+    },
+    {
+      "s": 15.02,
+      "e": 16.55,
+      "l": [
+        "ISSO ACONTECE",
+        "*ÀS VEZES*"
+      ],
+      "y": 74,
+      "hlColor": "red",
+      "big": true
+    },
+    {
+      "s": 16.68,
+      "e": 17.5,
+      "l": [
+        "ENTÃO,"
+      ],
+      "y": 74
+    },
+    {
+      "s": 17.56,
+      "e": 18.82,
+      "l": [
+        "MEUS *PARABÉNS*"
+      ],
+      "y": 74
+    },
+    {
+      "s": 18.84,
+      "e": 19.78,
+      "l": [
+        "VOCÊ ACABA DE"
+      ],
+      "y": 74
+    },
+    {
+      "s": 19.8,
+      "e": 20.3,
+      "l": [
+        "CONHECER"
+      ],
+      "y": 74
+    },
+    {
+      "s": 20.32,
+      "e": 22.08,
+      "l": [
+        "*PROMPT INJECTION*"
+      ],
+      "y": 74,
+      "big": true,
+      "hlColor": "red",
+      "fx": "term"
+    }
+  ]
+}

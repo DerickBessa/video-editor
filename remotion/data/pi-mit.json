@@ -1,0 +1,280 @@
+{
+  "part": "mit",
+  "blocks": [
+    {
+      "s": 0.0,
+      "e": 0.54,
+      "l": [
+        "E COMO É QUE"
+      ],
+      "y": 74
+    },
+    {
+      "s": 0.54,
+      "e": 1.52,
+      "l": [
+        "A GENTE PODE *MITIGAR*"
+      ],
+      "y": 74,
+      "hlColor": "green"
+    },
+    {
+      "s": 1.54,
+      "e": 2.22,
+      "l": [
+        "ESSE PROBLEMA?"
+      ],
+      "y": 74
+    },
+    {
+      "s": 2.3,
+      "e": 2.76,
+      "l": [
+        "EU VOU TE DAR"
+      ],
+      "y": 74
+    },
+    {
+      "s": 2.78,
+      "e": 3.76,
+      "l": [
+        "*TRÊS SUGESTÕES*"
+      ],
+      "y": 74,
+      "big": true
+    },
+    {
+      "s": 3.82,
+      "e": 4.74,
+      "l": [
+        "A PRIMEIRA SERIA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 4.76,
+      "e": 6.14,
+      "l": [
+        "*MENOR PRIVILÉGIO*"
+      ],
+      "y": 74,
+      "big": true,
+      "hlColor": "green",
+      "fx": "term"
+    },
+    {
+      "s": 6.18,
+      "e": 7.26,
+      "l": [
+        "A IA SÓ MEXE"
+      ],
+      "y": 74
+    },
+    {
+      "s": 7.28,
+      "e": 8.02,
+      "l": [
+        "NAQUILO QUE ELA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 8.04,
+      "e": 9.9,
+      "l": [
+        "*REALMENTE PRECISA* MEXER"
+      ],
+      "y": 74,
+      "hlColor": "green"
+    },
+    {
+      "s": 10.14,
+      "e": 11.18,
+      "l": [
+        "A SEGUNDA SERIA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 11.2,
+      "e": 13.08,
+      "l": [
+        "*VALIDAÇÃO NO BACKEND*"
+      ],
+      "y": 74,
+      "big": true,
+      "hlColor": "green",
+      "fx": "term"
+    },
+    {
+      "s": 13.24,
+      "e": 14.38,
+      "l": [
+        "MESMO QUE ELA PEÇA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 14.4,
+      "e": 15.4,
+      "l": [
+        "PRA FAZER ALGO,"
+      ],
+      "y": 74
+    },
+    {
+      "s": 15.42,
+      "e": 16.1,
+      "l": [
+        "O *SERVIDOR* AINDA"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 16.12,
+      "e": 17.24,
+      "l": [
+        "*VERIFICA* SE AQUILO"
+      ],
+      "y": 74,
+      "hlColor": "green"
+    },
+    {
+      "s": 17.26,
+      "e": 19.02,
+      "l": [
+        "PODE DE FATO",
+        "ACONTECER"
+      ],
+      "y": 74
+    },
+    {
+      "s": 19.2,
+      "e": 20.2,
+      "l": [
+        "*TERCEIRO*"
+      ],
+      "y": 74,
+      "big": true
+    },
+    {
+      "s": 20.22,
+      "e": 21.46,
+      "l": [
+        "TRATE *DOCUMENTOS*"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 21.48,
+      "e": 22.22,
+      "l": [
+        "*SITES*"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 22.24,
+      "e": 23.44,
+      "l": [
+        "E *MENSAGENS* EXTERNAS"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 23.46,
+      "e": 24.3,
+      "l": [
+        "COMO ALGO"
+      ],
+      "y": 74
+    },
+    {
+      "s": 24.32,
+      "e": 25.4,
+      "l": [
+        "*NÃO CONFIÁVEL*"
+      ],
+      "y": 74,
+      "big": true,
+      "hlColor": "red"
+    },
+    {
+      "s": 25.42,
+      "e": 26.86,
+      "l": [
+        "O QUE ERA PRA",
+        "SER PADRÃO, NÉ?"
+      ],
+      "y": 74
+    },
+    {
+      "s": 26.88,
+      "e": 27.96,
+      "l": [
+        "PORQUE, CARA,"
+      ],
+      "y": 74
+    },
+    {
+      "s": 28.08,
+      "e": 28.72,
+      "l": [
+        "O *PROMPT* NÃO PODE"
+      ],
+      "y": 74,
+      "hlColor": "cyan"
+    },
+    {
+      "s": 28.74,
+      "e": 29.52,
+      "l": [
+        "SER SUA *ÚNICA*"
+      ],
+      "y": 74,
+      "hlColor": "red"
+    },
+    {
+      "s": 29.54,
+      "e": 31.0,
+      "l": [
+        "*BARREIRA DE",
+        "SEGURANÇA*"
+      ],
+      "y": 74,
+      "big": true,
+      "hlColor": "red"
+    },
+    {
+      "s": 31.08,
+      "e": 32.12,
+      "l": [
+        "ENTÃO, MEU CHAPA"
+      ],
+      "y": 74
+    },
+    {
+      "s": 32.14,
+      "e": 33.48,
+      "l": [
+        "SE TU QUER",
+        "APRENDER MAIS"
+      ],
+      "y": 74
+    },
+    {
+      "s": 33.5,
+      "e": 35.88,
+      "l": [
+        "SEGUE O *@DECKDEV*"
+      ],
+      "y": 74,
+      "cta": true,
+      "hlColor": "green"
+    }
+  ]
+}

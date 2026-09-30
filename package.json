@@ -18,7 +18,9 @@
   "dependencies": {
     "@remotion/bundler": "^4.0.518",
     "@remotion/cli": "^4.0.518",
+    "@remotion/motion-blur": "^4.0.518",
     "@remotion/renderer": "^4.0.518",
+    "lucide-react": "^0.544.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "remotion": "^4.0.518"

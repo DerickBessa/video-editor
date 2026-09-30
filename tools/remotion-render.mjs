@@ -22,7 +22,15 @@ import { log } from '../lib/log.mjs';
 import { runIfMain } from '../lib/cli.mjs';
 import { probeVideo } from './probe-video.mjs';
 
-export const CODECS = { prores: 'mov', vp8: 'webm', png: 'png' };
+// `prores` e `vp8` carregam alpha e existem para OVERLAY, que é o caso de uso original.
+// `h264` existe para o outro caso: uma peça de tela cheia, com fundo próprio, que é o
+// entregável final e não uma camada. Ele não é apenas "outro container" — ele dispensa o
+// canal alpha, e com isso os frames intermediários podem ser JPEG em vez de PNG. Num Reel de
+// 89s a 60fps isso é a diferença entre 24,7 GB de intermediário e ~1 GB.
+export const CODECS = { prores: 'mov', vp8: 'webm', h264: 'mp4', png: 'png' };
+
+/** Codecs cujo sentido é compor por cima de outra coisa — só neles a falta de alpha é um bug. */
+const ALPHA_CODECS = new Set(['prores', 'vp8']);
 
 /** Component names, read from the library so this can never drift out of date. */
 export async function listComponents() {
@@ -39,13 +47,25 @@ export async function listComponents() {
   )];
 }
 
-/** Hash of the component sources, so the bundle is rebuilt when they change. */
-function sourceHash() {
-  const dir = path.join(ROOT, 'remotion');
-  const files = fs.readdirSync(dir).filter(f => /\.(jsx?|tsx?)$/.test(f)).sort();
+/** Hash of the component sources, so the bundle is rebuilt when they change.
+ *
+ *  This walks SUBDIRECTORIES. It used to read only `remotion/*`, which meant every edit inside
+ *  `remotion/scenes/` reused a stale bundle and rendered the previous version of the component —
+ *  a silent failure that looks exactly like "my change did nothing". */
+export function sourceHash() {
+  const root = path.join(ROOT, 'remotion');
+  const files = [];
+  const walk = dir => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name < b.name ? -1 : 1)) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { if (e.name !== 'node_modules') walk(full); }
+      else if (/\.(jsx?|tsx?|css|json)$/.test(e.name)) files.push(full);
+    }
+  };
+  walk(root);
   return configHash(files.map(f => {
-    const st = fs.statSync(path.join(dir, f));
-    return { f, size: st.size, mtime: Math.floor(st.mtimeMs) };
+    const st = fs.statSync(f);
+    return { f: path.relative(root, f).split(path.sep).join('/'), size: st.size, mtime: Math.floor(st.mtimeMs) };
   }));
 }
 
@@ -105,8 +125,12 @@ export async function remotionRender(component, opts = {}) {
   const width = opts.width ?? 1080;
   const height = opts.height ?? 1920;
   const codec = opts.codec || 'prores';
+  const crf = opts.crf ?? 18;
   if (!CODECS[codec]) throw usageError(`Unknown codec "${codec}"`, `Use: ${Object.keys(CODECS).join(', ')}`);
-  if (duration <= 0 || duration > 60) throw usageError(`--duration ${duration}s is outside 0..60`);
+  // The cap used to be 60s, on the assumption that an overlay is a short insert. A full
+  // animated cut-away is a legitimate use (the Prompt Injection Reel is 89s), so the limit is
+  // now a sanity bound against a typo, not an editorial one.
+  if (duration <= 0 || duration > 300) throw usageError(`--duration ${duration}s is outside 0..300`);
 
   let props = {};
   if (opts.props) {
@@ -152,10 +176,15 @@ export async function remotionRender(component, opts = {}) {
     // yuv422p12le and composited as a solid rectangle.
     ...(codec === 'prores' ? { proResProfile: '4444', pixelFormat: 'yuva444p10le' } : {}),
     ...(codec === 'vp8' ? { pixelFormat: 'yuva420p' } : {}),
+    ...(codec === 'h264' ? { pixelFormat: 'yuv420p', crf } : {}),
     // PNG frames are REQUIRED for any alpha pixel format — Remotion rejects the
     // combination otherwise ("you need to set PNG as the image format"), and
     // JPEG frames would have discarded the alpha channel before encoding.
-    imageFormat: 'png',
+    // PNG é OBRIGATÓRIO para qualquer pixel format com alpha, e é o passo mais lento do render.
+    // Sem alpha ele não serve para nada: JPEG a 95 é visualmente idêntico e escreve muito mais
+    // rápido, num intermediário uma ordem de grandeza menor.
+    imageFormat: ALPHA_CODECS.has(codec) ? 'png' : 'jpeg',
+    ...(ALPHA_CODECS.has(codec) ? {} : { jpegQuality: 95 }),
     outputLocation: out,
     inputProps,
     onProgress: () => {},
@@ -174,7 +203,7 @@ export async function remotionRender(component, opts = {}) {
   // An overlay with no alpha will composite as an opaque box, which is a
   // silent visual failure — so check the pixel format actually carries one.
   const hasAlpha = /a$|yuva|argb|rgba|bgra/i.test(got.pixFmt || '');
-  if (codec !== 'png' && !hasAlpha) {
+  if (ALPHA_CODECS.has(codec) && !hasAlpha) {
     log.warn(`the overlay pixel format is ${got.pixFmt}, which carries no alpha — ` +
       `it will composite as a solid rectangle`);
   }
@@ -208,7 +237,8 @@ export const tool = {
     fps: { type: 'number', default: 30, help: 'Frame rate' },
     width: { type: 'number', default: 1080, help: 'Overlay width' },
     height: { type: 'number', default: 1920, help: 'Overlay height' },
-    codec: { type: 'enum', values: Object.keys(CODECS), default: 'prores', help: 'prores = alpha (default); vp8 = smaller' },
+    codec: { type: 'enum', values: Object.keys(CODECS), default: 'prores', help: 'prores = alpha (default); vp8 = smaller alpha; h264 = peça final de tela cheia, sem alpha' },
+    crf: { type: 'number', default: 18, help: 'Qualidade do h264 (menor = melhor; 16-18 para entrega)' },
     list: { type: 'bool', default: false, help: 'List the available components and exit' },
     out: { type: 'string', help: 'Output path' },
   },
